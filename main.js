@@ -1,4 +1,3 @@
-// Селектори елементів на сторінці
 const btnKick = document.getElementById('btn-kick');
 const btnRandomAttack = document.getElementById('btn-random-attack');
 const progressbarCharacter = document.getElementById('progressbar-character');
@@ -9,7 +8,6 @@ const progressbarBlastoise = document.getElementById('progressbar-blastoise');
 const healthBlastoise = document.getElementById('health-blastoise');
 const logContainer = document.getElementById('logs');
 
-// Створення об'єктів Character і Enemy
 const character = {
     health: 100,
     progressbar: progressbarCharacter,
@@ -46,7 +44,6 @@ const blastoise = {
     }
 };
 
-// Лог битви
 const logs = [
     '[ПЕРСОНАЖ №1] згадав щось важливе, але несподівано [ПЕРСОНАЖ №2] вдарив у передпліччя ворога.',
     '[ПЕРСОНАЖ №1] поперхнувся, і за це [ПЕРСОНАЖ №2] з переляку приклав прямий удар коліном у лоб ворога.',
@@ -60,7 +57,6 @@ const logs = [
     '[ПЕРСОНАЖ №1] намагався щось сказати, але [ПЕРСОНАЖ №2] розбив брову супернику.'
 ];
 
-// Функція для атаки на Charmander і Blastoise
 function attackBothEnemies() {
     const damageToEnemy = Math.floor(Math.random() * 20) + 5;
     const damageToBlastoise = Math.floor(Math.random() * 20) + 5;
@@ -76,7 +72,6 @@ function attackBothEnemies() {
     checkVictory(blastoise.health, 'Ви перемогли Blastoise!');
 }
 
-// Функція для випадкової атаки на ворогів
 function randomAttack() {
     const damage = Math.floor(Math.random() * 15) + 5;
     const target = Math.random() < 0.5 ? enemy : blastoise;
@@ -87,7 +82,6 @@ function randomAttack() {
     checkVictory(target.health, `Ви перемогли ${target === enemy ? 'Charmander' : 'Blastoise'}!`);
 }
 
-// Логування дій
 function logAction(target, damage, remainingHealth) {
     const logText = `${target} отримав ${damage} шкоди, залишилось ${remainingHealth} HP.`;
     const randomLog = logs[Math.floor(Math.random() * logs.length)];
@@ -97,7 +91,6 @@ function logAction(target, damage, remainingHealth) {
     logContainer.innerHTML = newLogEntry + logContainer.innerHTML;
 }
 
-// Перевірка на перемогу
 function checkVictory(health, message) {
     if (health <= 0) {
         alert(message);
@@ -105,7 +98,6 @@ function checkVictory(health, message) {
     }
 }
 
-// Функція для скидання гри (відновлення здоров'я і лічильників)
 function resetGame() {
     setTimeout(function() {
         character.health = 100;
@@ -120,7 +112,6 @@ function resetGame() {
     }, 2000);
 }
 
-// Функція для підрахунку кліків
 function setupClickCounter(button, limit) {
     let count = 0;
 
@@ -131,7 +122,7 @@ function setupClickCounter(button, limit) {
             console.log(`Залишилось натискань: ${limit - count}`);
         } else {
             alert('Обмеження на натискання досягнуто!');
-            button.disabled = true; // Деактивуємо кнопку після досягнення ліміту
+            button.disabled = true;
         }
     };
 
@@ -144,7 +135,6 @@ function setupClickCounter(button, limit) {
     return { handleClick, reset };
 }
 
-// Встановлюємо обробники подій на кнопки
 const kickHandler = setupClickCounter(btnKick, 6);
 btnKick.addEventListener('click', function() {
     kickHandler.handleClick();
@@ -157,7 +147,6 @@ btnRandomAttack.addEventListener('click', function() {
     randomAttack();
 });
 
-// Функція для скидання лічильників кліків
 function resetClickCounters() {
     kickHandler.reset();
     randomAttackHandler.reset();
